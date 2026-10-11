@@ -9,11 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Entity
 @Table(name = "empresa")
 @Getter
@@ -38,7 +40,7 @@ public class Empresa {
 	private String nomeContato;
 	private String cargoContato;
 	private String areaDepartamento;
-	private String Linkedin;
+	private String linkedin;
 
 	@OneToMany(mappedBy = "empresa")
 	private List<Contrato> contratos;

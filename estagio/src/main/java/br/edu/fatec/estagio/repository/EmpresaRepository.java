@@ -1,5 +1,6 @@
 package br.edu.fatec.estagio.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import br.edu.fatec.estagio.model.Empresa;
 public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
     Optional<Empresa> findByCnpj (String cnpj);
+
+    List<Empresa> findByNomeEmpresaContainingIgnoreCase (String nome);
 
 }
