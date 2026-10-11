@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Empresas</title>
+</head>
+<body>
+    <h1>Empresas Cadastradas</h1>
+    
+    <!-- Formulário de Pesquisa por CNPJ -->
+    <form th:action="@{/empresa/listar}" method="get">
+        <label>Pesquisar por CNPJ:</label>
+        <input type="text" name="cnpj" th:value="${paramCnpj}" placeholder="Digite o CNPJ..." />
+        <button type="submit">Buscar</button>
+        <a th:href="@{/empresa/listar}">Limpar Filtro</a>
+    </form>
+    <br>
+
+    <a th:href="@{/empresa/cadastrar}">Nova Empresa</a>
+    <br><br>
+
+    <table border="1" cellpadding="8">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CNPJ</th>
+                <th>Cidade</th>
+                <th>E-mail</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="emp : ${empresas}">
+                <td th:text="${emp.id}">1</td>
+                <td th:text="${emp.nomeEmpresa}">Nome</td>
+                <td th:text="${emp.cnpj}">CNPJ</td>
+                <td th:text="${emp.cidade}">Cidade</td>
+                <td th:text="${emp.email}">Email</td>
+                <td>
+                    <a th:href="@{/empresa/editar/{id}(id=${emp.id})}">Editar</a>
+                    <a th:href="@{/empresa/deletar/{id}(id=${emp.id})}" onclick="return confirm('Deseja realmente excluir?')">Deletar</a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(empresas)}">
+                <td colspan="6" style="text-align: center;">Nenhuma empresa encontrada.</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

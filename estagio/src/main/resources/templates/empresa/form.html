@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Empresa</title>
+</head>
+<body>
+    <h1>Cadastro de Empresa</h1>
+    
+    <form action="#" th:action="@{/empresa/cadastrar}" th:object="${empresa}" method="post">
+    <input type="hidden" th:field="*{id}" />
+        <div>
+            <label>Nome da Empresa:</label>
+            <input type="text" th:field="*{nomeEmpresa}" required />
+        </div>
+        <div>
+            <label>CNPJ:</label>
+            <input type="text" th:field="*{cnpj}" required />
+        </div>
+        <div>
+            <label>Área de Atuação:</label>
+            <input type="text" th:field="*{areaAtuacao}" />
+        </div>
+        <div>
+            <label>Cidade:</label>
+            <input type="text" th:field="*{cidade}" />
+        </div>
+        <div>
+            <label>CEP:</label>
+            <input type="text" th:field="*{cep}" />
+        </div>
+        <div>
+            <label>E-mail:</label>
+            <input type="email" th:field="*{email}" />
+        </div>
+        <div>
+            <label>Site:</label>
+            <input type="text" th:field="*{site}" />
+        </div>
+        <div>
+            <label>Telefone:</label>
+            <input type="text" th:field="*{telefone}" />
+        </div>
+        <div>
+            <label>Nome do Contato:</label>
+            <input type="text" th:field="*{nomeContato}" />
+        </div>
+        <div>
+            <label>Cargo do Contato:</label>
+            <input type="text" th:field="*{cargoContato}" />
+        </div>
+        <div>
+            <label>Área/Departamento:</label>
+            <input type="text" th:field="*{areaDepartamento}" />
+        </div>
+        <div>
+            <label>Linkedin:</label>
+            <input type="text" th:field="*{linkedin}" />
+        </div>
+        <br>
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>

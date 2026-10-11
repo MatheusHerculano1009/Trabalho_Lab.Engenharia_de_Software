@@ -1,13 +1,12 @@
-package br.edu.fatec.estagio;
+package br.edu.fatec.estagio.model;
 
 import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,26 +15,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "estagiario")
+@Table(name = "empresa")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of ="id")
-public class Estagiario {
+public class Empresa {
 
-    @Id
+	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    private String nome;
-    private String telefone;
-    private String email;
-    private String curso;
-    private int semestre;
-    private String periodo;
+	private String nomeEmpresa;
+	private String cnpj;
+	private String areaAtuacao;
+	private String cidade;
+	private String cep;
+	private String email;
+	private String site;
+	private String telefone;
+	private String nomeContato;
+	private String cargoContato;
+	private String areaDepartamento;
+	private String Linkedin;
 
-    @ManyToMany(mappedBy = "empresa",  fetch = FetchType.LAZY)
-	private List<Empresa> empresas;
+	@OneToMany(mappedBy = "empresa")
+	private List<Contrato> contratos;
 
 }
