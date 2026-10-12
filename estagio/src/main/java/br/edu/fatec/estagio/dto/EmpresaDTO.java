@@ -28,7 +28,7 @@ public class EmpresaDTO {
 	private String cep;
 	private String email;
 	private String site;
-    @Size(min = 8, max = 11, message = "Numeração inválida para telefone!")
+    @Size(min = 8, max = 8, message = "Numeração inválida para telefone!")
 	private String telefone;
 	private String nomeContato;
 	private String cargoContato;
