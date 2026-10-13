@@ -1,6 +1,8 @@
 package br.edu.fatec.estagio.model;
 
 import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,24 +23,37 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of ="id")
+@EqualsAndHashCode(of = "id")
 public class Estagiario {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    // Identificação do aluno
     private String nome;
+
+    @Column(unique = true, length = 13)
     private String ra;
+
     private String telefone;
     private String email;
-    private String escolaOrigem;
-    private double faixaRenda;
-    private String etnia;
-    private String genero;
+
+    // Dados acadêmicos
     private String curso;
     private String semestre;
-    private int periodo;
+    private Integer periodo;   
+    private String turno;      
+
+    // Questionário do Luciano (análise do perfil do aluno)
+    private String escolaOrigem;
+    private String enderecoEscola;
+    private Integer vezesVestibular;
+
+    //Isso é necessário?
+    private String faixaRenda; 
+    private String etnia;      
+    private String genero;     
 
 	@OneToMany(mappedBy = "estagiario")
 	private List<Contrato> contratos;

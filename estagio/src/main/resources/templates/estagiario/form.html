@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${estagiarioDTO.id != null} ? 'Editar Estagiário' : 'Cadastrar Estagiário'">Cadastrar Estagiário</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -12,90 +13,112 @@
             <p class="text-sm text-gray-500 mt-1">Preencha os dados do estudante para o sistema de estágio.</p>
         </div>
 
-        <div th:if="${erroRa}" class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded-r shadow-sm">
-            <p th:text="${erroRa}"></p>
-        </div>
-
-        <form action="#" th:action="@{/estagiario/cadastrar}" th:object="${estagiarioDTO}" method="post" class="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl p-8 space-y-6">
+        <form action="#" th:action="@{/estagiario/cadastrar}" th:object="${estagiarioDTO}" method="post" class="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl p-8 space-y-8">
             <input type="hidden" th:field="*{id}" />
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Dados do estagiário -->
+            <section>
+                <h2 class="text-base font-semibold text-gray-900 mb-4">Dados do estagiário</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">RA:</label>
-                    <input type="text" th:field="*{ra}" th:readonly="${modoEdicao}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition disabled:bg-gray-100 read-only:bg-gray-100 read-only:text-gray-500" 
-                           required
-                           minlength="13"
-                           maxlength="13"
-                           inputmode="numeric"
-                           pattern="\d*"
+                    <input type="text" th:field="*{ra}" th:readonly="${modoEdicao}"
+                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition read-only:bg-gray-100 read-only:text-gray-500"
+                           required minlength="13" maxlength="13" inputmode="numeric" pattern="\d{13}"
                            title="Apenas números são permitidos (13 dígitos)" />
                     <span th:if="${#fields.hasErrors('ra')}" th:errors="*{ra}" class="text-xs text-red-600 mt-1 block"></span>
                     <small th:if="${modoEdicao}" class="text-xs text-gray-400 mt-1 block">O RA não pode ser alterado.</small>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nome:</label>
-                    <input type="text" th:field="*{nome}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" 
-                           required />
+                    <input type="text" th:field="*{nome}" maxlength="150" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
                     <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-xs text-red-600 mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Telefone:</label>
-                    <input type="text" th:field="*{telefone}" 
-                           maxlength="8"
-                           minlength="8" 
-                           inputmode="numeric"
-                           pattern="\d*"
-                           title="Apenas números são permitidos"
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <input type="text" th:field="*{telefone}" maxlength="8" inputmode="numeric" pattern="\d{8}" title="Apenas números, 8 dígitos" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
                     <span th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}" class="text-xs text-red-600 mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">E-mail:</label>
-                    <input type="email" th:field="*{email}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Escola de Origem:</label>
-                    <input type="text" th:field="*{escolaOrigem}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Faixa de Renda:</label>
-                    <input type="number" step="0.01" th:field="*{faixaRenda}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Etnia:</label>
-                    <input type="text" th:field="*{etnia}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Gênero:</label>
-                    <input type="text" th:field="*{genero}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <input type="email" th:field="*{email}" maxlength="150" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-xs text-red-600 mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Curso:</label>
-                    <input type="text" th:field="*{curso}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <input type="text" th:field="*{curso}" maxlength="100" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <span th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" class="text-xs text-red-600 mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Semestre:</label>
-                    <input type="text" th:field="*{semestre}" 
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <input type="text" th:field="*{semestre}" maxlength="20" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <span th:if="${#fields.hasErrors('semestre')}" th:errors="*{semestre}" class="text-xs text-red-600 mt-1 block"></span>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Período:</label>
-                    <input type="number" th:field="*{periodo}" 
-                           min = "1"
-                           max = "10"
-                           class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <input type="number" th:field="*{periodo}" min="1" max="10" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
                     <span th:if="${#fields.hasErrors('periodo')}" th:errors="*{periodo}" class="text-xs text-red-600 mt-1 block"></span>
                 </div>
-            </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Turno:</label>
+                    <select th:field="*{turno}" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                        <option value="">Selecione...</option>
+                        <option th:each="op : ${turnos}" th:value="${op}" th:text="${op}">Opção</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('turno')}" th:errors="*{turno}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                </div>
+            </section>
+
+            <!-- Questionário -->
+            <section class="pt-6 border-t border-gray-100">
+                <h2 class="text-base font-semibold text-gray-900">Perfil do aluno</h2>
+                <p class="text-sm text-gray-500 mt-1 mb-4">Estas respostas são usadas apenas em análises para entender o perfil de quem estagia. Renda, etnia e gênero são opcionais.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Escola de origem:</label>
+                    <input type="text" th:field="*{escolaOrigem}" maxlength="150" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <span th:if="${#fields.hasErrors('escolaOrigem')}" th:errors="*{escolaOrigem}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Endereço da escola:</label>
+                    <input type="text" th:field="*{enderecoEscola}" maxlength="255" required placeholder="Rua, número, bairro, cidade" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <span th:if="${#fields.hasErrors('enderecoEscola')}" th:errors="*{enderecoEscola}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Quantas vezes prestou o vestibular para este curso:</label>
+                    <input type="number" th:field="*{vezesVestibular}" min="1" max="20" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                    <span th:if="${#fields.hasErrors('vezesVestibular')}" th:errors="*{vezesVestibular}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Faixa de renda:</label>
+                    <select th:field="*{faixaRenda}" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                        <option value="">Prefiro não informar</option>
+                        <option th:each="op : ${faixasRenda}" th:value="${op}" th:text="${op}">Opção</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('faixaRenda')}" th:errors="*{faixaRenda}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Etnia:</label>
+                    <select th:field="*{etnia}" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                        <option value="">Prefiro não informar</option>
+                        <option th:each="op : ${etnias}" th:value="${op}" th:text="${op}">Opção</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('etnia')}" th:errors="*{etnia}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Gênero:</label>
+                    <select th:field="*{genero}" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                        <option value="">Prefiro não informar</option>
+                        <option th:each="op : ${generos}" th:value="${op}" th:text="${op}">Opção</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}" class="text-xs text-red-600 mt-1 block"></span>
+                </div>
+                </div>
+            </section>
+
             <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-100">
-                <a th:href="@{/estagiario/listar}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Voltar para a Listagem</a>
+                <a th:href="@{/estagiario/listar}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Voltar para a listagem</a>
                 <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow-sm transition">Salvar</button>
             </div>
         </form>
