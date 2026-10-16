@@ -12,6 +12,7 @@ import br.edu.fatec.estagio.model.Empresa;
 import br.edu.fatec.estagio.repository.EmpresaRepository;
 import br.edu.fatec.estagio.service.EmpresaService;
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/empresa")
@@ -30,7 +31,7 @@ public class EmpresaController {
 	}
 
 	@PostMapping("/cadastrar")
-	public String salvar(@Valid @ModelAttribute ("empresaDTO") EmpresaDTO dto, BindingResult result, Model model){
+	public String salvar(@Valid @ModelAttribute ("empresaDTO") EmpresaDTO dto, BindingResult result, Model model, RedirectAttributes redirect){
 		String erroDuplicidade = empresaService.validarCnpjDuplicado(dto);
 		if (erroDuplicidade != null) {
 			model.addAttribute("erroCnpj", erroDuplicidade);
@@ -42,7 +43,13 @@ public class EmpresaController {
 			model.addAttribute("modoEdicao", dto.getId() != null);
 			return "empresa/form";
 		}
+		boolean edicao = dto.getId() != null;
 		empresaService.salvarEmpresa(dto);
+		if (edicao) {
+			redirect.addFlashAttribute("sucesso", "Empresa atualizada com sucesso.");
+		} else {
+			redirect.addFlashAttribute("sucesso", "Empresa cadastrada com sucesso.");
+		}
 		return "redirect:/empresa/listar";
 	}
 
