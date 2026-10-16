@@ -15,22 +15,15 @@
                 <h1 class="text-2xl font-semibold tracking-tight text-gray-900">Empresas Cadastradas</h1>
                 <p class="text-sm text-gray-500 mt-1">Visualize, filtre, edite ou remova as empresas cadastradas.</p>
             </div>
-            <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-4">
+                <a th:href="@{/}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Início</a>
                 <a th:href="@{/estagiario/listar}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Ver estagiários</a>
                 <a th:href="@{/empresa/cadastrar}" class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2.5 rounded-lg shadow-sm transition">
                     + Nova Empresa
                 </a>
             </div>
         </div>
-
-        <!-- Mensagens -->
-        <div th:if="${sucesso}" class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 text-sm rounded-r shadow-sm">
-            <p th:text="${sucesso}"></p>
-        </div>
-        <div th:if="${erro}" class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded-r shadow-sm">
-            <p th:text="${erro}"></p>
-        </div>
-
+        
         <!-- Formulário de Filtro -->
         <div class="bg-white p-5 rounded-xl shadow-sm ring-1 ring-gray-900/5 mb-6">
             <form th:action="@{/empresa/listar}" method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">

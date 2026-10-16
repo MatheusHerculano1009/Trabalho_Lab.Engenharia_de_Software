@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${contratoDTO.id != null} ? 'Editar Contrato' : 'Cadastrar Contrato'">Cadastrar Contrato</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
+    <div class="max-w-3xl mx-auto px-6 py-10 w-full">
+        <div class="mb-8">
+            <h1 class="text-2xl font-semibold tracking-tight text-gray-900" th:text="${contratoDTO.id != null} ? 'Editar Contrato de Estágio' : 'Cadastro de Contrato de Estágio'">Cadastro de Contrato de Estágio</h1>
+            <p class="text-sm text-gray-500 mt-1">Vincule um estagiário a uma empresa e informe os dados do contrato.</p>
+        </div>
+
+        <div th:if="${#lists.isEmpty(estagiarios) or #lists.isEmpty(empresas)}" class="mb-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 text-sm rounded-r shadow-sm">
+            <p>É preciso ter ao menos um estagiário e uma empresa cadastrados para criar um contrato.</p>
+            <p class="mt-1">
+                <a th:href="@{/estagiario/cadastrar}" class="underline">Cadastrar estagiário</a> ·
+                <a th:href="@{/empresa/cadastrar}" class="underline">Cadastrar empresa</a>
+            </p>
+        </div>
+
+        <form action="#" th:action="@{/contrato/cadastrar}" th:object="${contratoDTO}" method="post" class="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-xl p-8 space-y-8">
+            <input type="hidden" th:field="*{id}" />
+
+            <!-- Vínculo -->
+            <section>
+                <h2 class="text-base font-semibold text-gray-900 mb-4">Vínculo</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Estagiário:</label>
+                        <select th:field="*{estagiarioId}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                            <option value="">Selecione...</option>
+                            <option th:each="e : ${estagiarios}" th:value="${e.id}" th:text="${e.nome} + ' (RA ' + ${e.ra} + ')'">Estagiário</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('estagiarioId')}" th:errors="*{estagiarioId}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Empresa:</label>
+                        <select th:field="*{empresaId}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                            <option value="">Selecione...</option>
+                            <option th:each="emp : ${empresas}" th:value="${emp.id}" th:text="${emp.nomeEmpresa}">Empresa</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('empresaId')}" th:errors="*{empresaId}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Período -->
+            <section class="pt-6 border-t border-gray-100">
+                <h2 class="text-base font-semibold text-gray-900 mb-4">Período e carga horária</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Início do contrato:</label>
+                        <input type="date" th:field="*{inicioContrato}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('inicioContrato')}" th:errors="*{inicioContrato}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Término do contrato:</label>
+                        <input type="date" th:field="*{terminoContrato}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('terminoContrato')}" th:errors="*{terminoContrato}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Carga horária semanal (horas):</label>
+                        <input type="number" th:field="*{cargaHoraria}" min="1" max="30" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('cargaHoraria')}" th:errors="*{cargaHoraria}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Atividades -->
+            <section class="pt-6 border-t border-gray-100">
+                <h2 class="text-base font-semibold text-gray-900 mb-4">Área e atividades</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Área / Setor do estágio:</label>
+                        <input type="text" th:field="*{area}" maxlength="100" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('area')}" th:errors="*{area}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Cargo:</label>
+                        <input type="text" th:field="*{cargo}" maxlength="100" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('cargo')}" th:errors="*{cargo}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Função / Atividades principais:</label>
+                        <input type="text" th:field="*{funcao}" maxlength="255" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('funcao')}" th:errors="*{funcao}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de estágio:</label>
+                        <select th:field="*{modalidade}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                            <option value="">Selecione...</option>
+                            <option th:each="op : ${modalidades}" th:value="${op}" th:text="${op}">Opção</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('modalidade')}" th:errors="*{modalidade}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de contrato:</label>
+                        <select th:field="*{tipoContrato}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
+                            <option value="">Selecione...</option>
+                            <option th:each="op : ${tiposContrato}" th:value="${op}" th:text="${op}">Opção</option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('tipoContrato')}" th:errors="*{tipoContrato}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Supervisor -->
+            <section class="pt-6 border-t border-gray-100">
+                <h2 class="text-base font-semibold text-gray-900 mb-4">Supervisor responsável</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Supervisor:</label>
+                        <input type="text" th:field="*{supervisor}" maxlength="150" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('supervisor')}" th:errors="*{supervisor}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Cargo do supervisor:</label>
+                        <input type="text" th:field="*{cargoSupervisor}" maxlength="100" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <span th:if="${#fields.hasErrors('cargoSupervisor')}" th:errors="*{cargoSupervisor}" class="text-xs text-red-600 mt-1 block"></span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-100">
+                <a th:href="@{/}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Início</a>
+                <a th:href="@{/contrato/listar}" class="text-sm font-medium text-gray-600 hover:text-gray-900 transition">Voltar para a listagem</a>
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow-sm transition">Salvar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
