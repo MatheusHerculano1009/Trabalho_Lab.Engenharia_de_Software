@@ -32,7 +32,6 @@ public class ContratoDTO {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate inicioContrato;
 
-    @NotNull(message = "Informe a data de término!")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate terminoContrato;
 
@@ -55,9 +54,6 @@ public class ContratoDTO {
 
     @NotBlank(message = "Selecione a modalidade do estágio!")
     private String modalidade;
-
-    @NotBlank(message = "Selecione o tipo de contrato!")
-    private String tipoContrato;
 
     @NotBlank(message = "Selecione o supervisor!")
     //@Size(max = 150, message = "Supervisor deve ter no máximo 150 caracteres!")

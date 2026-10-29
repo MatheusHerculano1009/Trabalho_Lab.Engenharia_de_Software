@@ -58,7 +58,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Término do contrato:</label>
-                        <input type="date" th:field="*{terminoContrato}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
+                        <input type="date" th:field="*{terminoContrato}" class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
                         <span th:if="${#fields.hasErrors('terminoContrato')}" th:errors="*{terminoContrato}" class="text-xs text-red-600 mt-1 block"></span>
                     </div>
                     <div>
@@ -88,21 +88,13 @@
                         <input type="text" th:field="*{funcao}" maxlength="255" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition" />
                         <span th:if="${#fields.hasErrors('funcao')}" th:errors="*{funcao}" class="text-xs text-red-600 mt-1 block"></span>
                     </div>
-                    <div>
+                    <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de estágio:</label>
                         <select th:field="*{modalidade}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
                             <option value="">Selecione...</option>
                             <option th:each="op : ${modalidades}" th:value="${op}" th:text="${op}">Opção</option>
                         </select>
                         <span th:if="${#fields.hasErrors('modalidade')}" th:errors="*{modalidade}" class="text-xs text-red-600 mt-1 block"></span>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de contrato:</label>
-                        <select th:field="*{tipoContrato}" required class="w-full rounded-lg border border-gray-300 px-3.5 py-2 text-sm shadow-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition bg-white">
-                            <option value="">Selecione...</option>
-                            <option th:each="op : ${tiposContrato}" th:value="${op}" th:text="${op}">Opção</option>
-                        </select>
-                        <span th:if="${#fields.hasErrors('tipoContrato')}" th:errors="*{tipoContrato}" class="text-xs text-red-600 mt-1 block"></span>
                     </div>
                 </div>
             </section>

@@ -71,7 +71,6 @@ public class ContratoService {
         contrato.setCargo(dto.getCargo().trim());
         contrato.setFuncao(dto.getFuncao().trim());
         contrato.setModalidade(dto.getModalidade());
-        contrato.setTipoContrato(dto.getTipoContrato());
         contrato.setSupervisor(vazioParaNull(dto.getSupervisor()));
         contrato.setCargoSupervisor(vazioParaNull(dto.getCargoSupervisor()));
 
@@ -86,8 +85,8 @@ public class ContratoService {
                 .terminoContrato(contrato.getTerminoContrato())
                 .cargaHoraria(contrato.getCargaHoraria())
                 .area(contrato.getArea()).cargo(contrato.getCargo()).funcao(contrato.getFuncao())
-                .modalidade(contrato.getModalidade()).tipoContrato(contrato.getTipoContrato())
-                .supervisor(contrato.getSupervisor()).cargoSupervisor(contrato.getCargoSupervisor())
+                .modalidade(contrato.getModalidade()).supervisor(contrato.getSupervisor())
+                .cargoSupervisor(contrato.getCargoSupervisor())
                 .build();
     }
 

@@ -53,9 +53,6 @@ public class Contrato {
     // Presencial, Remoto ou Híbrido
     private String modalidade;
 
-    // CLT ou PJ
-    private String tipoContrato;
-
     private String supervisor;
     private String cargoSupervisor;
 

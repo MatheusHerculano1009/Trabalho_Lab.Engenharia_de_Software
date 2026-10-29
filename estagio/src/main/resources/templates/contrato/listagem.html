@@ -59,7 +59,6 @@
                         <th class="px-4 py-3">Empresa</th>
                         <th class="px-4 py-3">Área / Cargo</th>
                         <th class="px-4 py-3">Tipo de estágio</th>
-                        <th class="px-4 py-3">Contrato</th>
                         <th class="px-4 py-3">Período</th>
                         <th class="px-4 py-3">Duração</th>
                         <th class="px-4 py-3">Carga semanal</th>
@@ -75,9 +74,17 @@
                             <span class="block text-xs text-gray-400" th:text="${c.cargo}">Cargo</span>
                         </td>
                         <td class="px-4 py-3" th:text="${c.modalidade}">Remoto</td>
-                        <td class="px-4 py-3" th:text="${c.tipoContrato}">CLT</td>
-                        <td class="px-4 py-3 whitespace-nowrap" th:text="${#temporals.format(c.inicioContrato, 'dd/MM/yyyy')} + ' a ' + ${#temporals.format(c.terminoContrato, 'dd/MM/yyyy')}">01/03/2026 a 31/08/2026</td>
-                        <td class="px-4 py-3 whitespace-nowrap" th:text="${c.duracaoMeses == 1 ? '1 mês' : c.duracaoMeses + ' meses'}">6 meses</td>
+                        
+                        <!-- Período atualizado: se terminoContrato for nulo, exibe 'Em vigor' -->
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            <span th:text="${#temporals.format(c.inicioContrato, 'dd/MM/yyyy')}">01/03/2026</span>
+                            <span> - </span>
+                            <span th:text="${c.terminoContrato != null ? #temporals.format(c.terminoContrato, 'dd/MM/yyyy') : 'Em vigor'}">Em vigor</span>
+                        </td>
+
+                        <!-- Duração atualizada: exibe '-' se não houver data de término -->
+                        <td class="px-4 py-3 whitespace-nowrap" th:text="${c.terminoContrato != null ? (c.duracaoMeses == 1 ? '1 mês' : c.duracaoMeses + ' meses') : '-'}">6 meses</td>
+
                         <td class="px-4 py-3 whitespace-nowrap" th:text="${c.cargaHoraria} + ' h'">30 h</td>
                         <td class="px-4 py-3 text-right whitespace-nowrap">
                             <a th:href="@{/contrato/editar/{id}(id=${c.id})}" class="text-indigo-600 hover:text-indigo-800 font-medium">Editar</a>
@@ -87,7 +94,7 @@
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(contratos)}">
-                        <td colspan="9" class="px-4 py-10 text-center text-gray-400">Nenhum contrato encontrado.</td>
+                        <td colspan="8" class="px-4 py-10 text-center text-gray-400">Nenhum contrato encontrado.</td>
                     </tr>
                 </tbody>
             </table>

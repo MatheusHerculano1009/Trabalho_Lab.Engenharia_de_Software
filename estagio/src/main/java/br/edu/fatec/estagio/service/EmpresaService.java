@@ -32,8 +32,13 @@ public class EmpresaService {
         return empresaRepository.findById(id);
     }
 
-    public void deletarPorId(Long id) {
+    public boolean deletarPorId(Long id) {
+        Optional<Empresa> empresa = empresaRepository.findById(id);
+        if (empresa.isPresent() && !empresa.get().getContratos().isEmpty()) {
+            return false;
+        }
         empresaRepository.deleteById(id);
+        return true;
     }
 
     public String validarCnpjDuplicado(EmpresaDTO dto) {

@@ -77,7 +77,13 @@ public class EmpresaController {
 	}
 
 	@GetMapping("/deletar/{id}")
-	public String deletar(@PathVariable Long id) {
+	public String deletar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		boolean deletado = empresaService.deletarPorId(id);
+		if (deletado) {
+			redirectAttributes.addFlashAttribute("sucesso", "Empresa excluída com sucesso");
+		} else {
+			redirectAttributes.addFlashAttribute("erro", "Não é possível excluir esta empresa pois existem contratos ativos vinculados a ela." );
+		}
 		empresaService.deletarPorId(id);
 		return "redirect:/empresa/listar";
 	}

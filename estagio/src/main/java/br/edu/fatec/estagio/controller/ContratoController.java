@@ -23,7 +23,6 @@ public class ContratoController {
 
     // Opções dos <select> do formulário. Para mudar uma opção, basta alterar aqui.
     private static final List<String> MODALIDADES = List.of("Presencial", "Remoto", "Híbrido");
-    private static final List<String> TIPOS_CONTRATO = List.of("CLT", "PJ");
 
     @Autowired
     private ContratoService contratoService;
@@ -37,7 +36,6 @@ public class ContratoController {
     // Carrega as listas usadas pelos <select> (só quando o formulário é exibido).
     private void carregarOpcoes(Model model) {
         model.addAttribute("modalidades", MODALIDADES);
-        model.addAttribute("tiposContrato", TIPOS_CONTRATO);
         model.addAttribute("empresas", empresaService.listarTodas());
         model.addAttribute("estagiarios", estagiarioService.listarTodos());
     }
