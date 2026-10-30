@@ -15,4 +15,6 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
 
     List<Empresa> findByNomeEmpresaContainingIgnoreCase (String nome);
 
+    boolean existsContratosById(Long empresaId);
+
 }

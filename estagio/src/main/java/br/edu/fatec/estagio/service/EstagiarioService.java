@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.fatec.estagio.dto.EstagiarioDTO;
+import br.edu.fatec.estagio.model.Empresa;
 import br.edu.fatec.estagio.model.Estagiario;
 import br.edu.fatec.estagio.repository.EstagiarioRepository;
 
@@ -32,8 +33,13 @@ public class EstagiarioService {
         return estagiarioRepository.findById(id);
     }
 
-    public void deletarPorId(Long id) {
+    public boolean deletarPorId(Long id) {
+        Optional<Estagiario> estagiario = estagiarioRepository.findById(id);
+        if (estagiario.isPresent() && !estagiario.get().getContratos().isEmpty()) {
+            return false;
+        }
         estagiarioRepository.deleteById(id);
+        return true;
     }
 
     // Se o RA foi informado, ele tem prioridade (busca exata);

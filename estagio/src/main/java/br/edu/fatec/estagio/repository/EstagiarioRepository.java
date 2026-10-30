@@ -17,5 +17,5 @@ public interface EstagiarioRepository extends JpaRepository<Estagiario, Long> {
     // Busca por nome E curso em ordem alfabética
     List<Estagiario> findByNomeContainingIgnoreCaseAndCursoContainingIgnoreCaseOrderByNomeAsc(String nome, String curso);
 
-    boolean existsContratosById(Long empresaId);
+    boolean existsContratosById(Long estagiarioId);
 }

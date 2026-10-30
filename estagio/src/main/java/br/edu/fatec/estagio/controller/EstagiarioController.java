@@ -125,7 +125,13 @@ public class EstagiarioController {
 
     // Usei POST e não GET só para evitar que um link não apague registros por acidente.
     @PostMapping("/deletar/{id}")
-    public String deletar(@PathVariable Long id) {
+    public String deletar(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        boolean deletado = estagiarioService.deletarPorId(id);
+        if (deletado) {
+            redirectAttributes.addFlashAttribute("sucesso", "Estagiário excluído com sucesso.");
+        } else {
+            redirectAttributes.addFlashAttribute("erro", "Não é possível excluir este estagiário pois existem contratos ativos vinculados a ele.");
+        }
 		estagiarioService.deletarPorId(id);
         return "redirect:/estagiario/listar";
     }

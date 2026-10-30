@@ -23,6 +23,13 @@
                 </a>
             </div>
         </div>
+
+        <div th:if="${sucesso}" class="mb-6 p-4 bg-emerald-50 border-l-4 border-emerald-500 text-emerald-700 text-sm rounded-r shadow-sm">
+            <p th:text="${sucesso}"></p>
+        </div>
+        <div th:if="${erro}" class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm rounded-r shadow-sm">
+            <p th:text="${erro}"></p>
+        </div>
         
         <!-- Formulário de Filtro -->
         <div class="bg-white p-5 rounded-xl shadow-sm ring-1 ring-gray-900/5 mb-6">
