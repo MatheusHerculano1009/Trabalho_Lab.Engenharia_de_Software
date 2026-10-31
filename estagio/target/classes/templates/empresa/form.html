@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${empresaDTO.id != null} ? 'Editar Empresa' : 'Cadastrar Empresa'">Cadastrar Empresa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind.js}"></script>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased min-h-screen flex flex-col justify-between">
     <div class="max-w-3xl mx-auto px-6 py-10 w-full">
